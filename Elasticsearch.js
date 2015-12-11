@@ -11,6 +11,24 @@ var usernameAggregation = '\
         }\
     }';
 
+function recentUserDataQuery(username) {
+    return '\
+       {\
+           "query": {\
+               "term" : {\
+                   "username" : "' + username + '"\
+                }\
+            },\
+            "sort" : [\
+                {\
+                    "@timestamp": {\
+                        "order" : "desc"\
+                    }\
+                }\
+            ]\
+        }';
+}
+
 function Elasticsearch(esUrl) {
     this.esUrl = esUrl;
 
@@ -21,6 +39,20 @@ function Elasticsearch(esUrl) {
             });
 
             onSuccess(users);
+        });
+    };
+
+    this.recentUserData = function (user, onSuccess) {
+        $.post(this.esUrl + '/weight/_search', recentUserDataQuery(user), function (data) {
+            var userData = data['hits']['hits'].map(function (hit) {
+                var source = hit['_source'];
+                return {
+                    'date': source['@timestamp'],
+                    'weight': source['value']
+                };
+            });
+
+            onSuccess(userData);
         });
     }
 }
