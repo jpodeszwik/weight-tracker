@@ -1,11 +1,26 @@
+var usernameAggregation = '\
+    {\
+        "size": 0,\
+        "aggregations" : {\
+            "users" : {\
+                "terms" : {\
+                    "field" : "username",\
+                    "size" : "1000"\
+                }\
+            }\
+        }\
+    }';
+
 function Elasticsearch(esUrl) {
     this.esUrl = esUrl;
-    this.listWeightIndices = function (onSuccess) {
-        $.get(this.esUrl + '/_mappings', function (data) {
-            var indices = Object.keys(data).filter(function (index) {
-                return 'weight' in data[index]['mappings'];
+
+    this.listUsers = function (onSuccess) {
+        $.post(this.esUrl + '/weight/_search', usernameAggregation, function (data) {
+            var users = data["aggregations"]["users"]["buckets"].map(function (bucket) {
+                return bucket["key"];
             });
-            onSuccess(indices);
+
+            onSuccess(users);
         });
     }
 }
