@@ -6,8 +6,9 @@ $(function () {
         var username = $('.user-selector').val();
         es.recentUserData(username, function (userData) {
             $('.recent-data').empty();
-            userData.forEach(function (data) {
-                $('.recent-data').append($('<tr><td>' + data.date + '</td><td>' + data.weight + '</td></tr>'))
+            userData.forEach(function (weightRecord) {
+                var recordView = new WeightRecordView({model: weightRecord});
+                $('.recent-data').append(recordView.render().el)
             });
         });
 
@@ -21,7 +22,7 @@ $(function () {
         updateRecentData();
     });
 
-    $('.user-selector').change(function() {
+    $('.user-selector').change(function () {
         updateRecentData();
     });
 });

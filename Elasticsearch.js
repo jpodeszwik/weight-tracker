@@ -46,10 +46,10 @@ function Elasticsearch(esUrl) {
         $.post(this.esUrl + '/weight/_search', recentUserDataQuery(user), function (data) {
             var userData = data['hits']['hits'].map(function (hit) {
                 var source = hit['_source'];
-                return {
-                    'date': source['@timestamp'],
-                    'weight': source['value']
-                };
+                return new WeightRecord({
+                    date: source['@timestamp'],
+                    weight: source['value']
+                });
             });
 
             onSuccess(userData);

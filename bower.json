@@ -17,6 +17,8 @@
   ],
   "dependencies": {
     "jquery": "~2.1.4",
-    "bootstrap": "~3.3.6"
+    "bootstrap": "~3.3.6",
+    "backbone": "~1.2.3",
+    "underscore": "~1.8.3"
   }
 }
