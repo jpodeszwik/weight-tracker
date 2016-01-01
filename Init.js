@@ -1,13 +1,17 @@
 $(function () {
     var es = new Elasticsearch('http://zbiki.ddns.net');
+    var kibana = new Kibana('http://zbiki.ddns.net/kibana4');
 
     function updateRecentData() {
-        es.recentUserData($('.user-selector').val(), function (userData) {
+        var username = $('.user-selector').val();
+        es.recentUserData(username, function (userData) {
             $('.recent-data').empty();
             userData.forEach(function (data) {
                 $('.recent-data').append($('<tr><td>' + data.date + '</td><td>' + data.weight + '</td></tr>'))
             });
         });
+
+        $(".kibana-iframe").attr("src", kibana.getIframeUrl(username));
     }
 
     es.listUsers(function (users) {

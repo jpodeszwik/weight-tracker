@@ -11,6 +11,7 @@
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 
     <script src="Elasticsearch.js"></script>
+    <script src="Kibana.js"></script>
     <script src="Init.js"></script>
 </head>
 <body>
@@ -20,6 +21,9 @@
             <h3 class="panel-title">Select user</h3><select class="form-control user-selector"></select>
         </div>
         <div class="panel-body">
+            <iframe class="kibana-iframe" height="400" width="100%" align="middle"></iframe>
+        </div>
+        <div class="panel-footer">
             <table class="table">
                 <thead>
                 <tr>
