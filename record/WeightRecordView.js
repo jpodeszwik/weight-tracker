@@ -8,3 +8,8 @@ var WeightRecordView = Marionette.ItemView.extend({
         });
     }
 });
+
+var WeightRecordListView = Marionette.CollectionView.extend({
+    tagName: 'tbody',
+    childView: WeightRecordView
+});

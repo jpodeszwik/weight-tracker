@@ -4,12 +4,10 @@ $(function () {
 
     function updateRecentData() {
         var username = $('.user-selector').val();
-        es.recentUserData(username, function (userData) {
-            $('.recent-data').empty();
-            userData.forEach(function (weightRecord) {
-                var recordView = new WeightRecordView({model: weightRecord});
-                $('.recent-data').append(recordView.render().el)
-            });
+        es.recentUserData(username, function (weightRecordListModel) {
+            $('.recent-data').find('tbody').remove();
+            var weightRecordListView = new WeightRecordListView({collection: weightRecordListModel});
+            $('.recent-data').append(weightRecordListView.render().el);
         });
 
         $(".kibana-iframe").attr("src", kibana.getIframeUrl(username));
