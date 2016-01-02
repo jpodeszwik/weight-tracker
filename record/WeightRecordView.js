@@ -1,13 +1,10 @@
-var WeightRecordView = Backbone.View.extend({
+var WeightRecordView = Marionette.ItemView.extend({
+    tagName: 'tr',
 
-    tagName: "tr",
-
-    initialize: function () {
-        _.bindAll(this, 'render');
-    },
-
-    render: function () {
-        this.$el.html('<td>' + this.model.get('date') + '</td><td>' + this.model.get('weight') + '</td>');
-        return this;
+    template: function (model) {
+        return _.template('<td><%= date %></td><td><%= weight %></td>')({
+            date: model.date,
+            weight: model.weight
+        });
     }
 });
