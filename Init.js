@@ -10,7 +10,10 @@ $(function () {
             $('.recent-data').append(weightRecordListView.render().el);
         });
 
-        $(".kibana-iframe").attr("src", kibana.getIframeUrl(username));
+        es.getUserBounds(username, function (bounds) {
+            $(".kibana-iframe").attr("src", kibana.getIframeUrl(username, bounds));
+        });
+
     }
 
     es.listUsers(function (users) {
