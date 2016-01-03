@@ -11,13 +11,13 @@ function serializeToKibanaUrlFormat(param) {
             return fieldName + ':' + serializeToKibanaUrlFormat(param[fieldName]);
         }).join(',');
         return '(' + innerValue + ')';
+    } else if (typeof param === 'boolean') {
+        return param ? '!t' : '!f';
+    } else if (typeof param === 'string') {
+        return '\'' + param + '\'';
     } else {
-        return param
+        return param;
     }
-}
-
-function singleQuotedString(str) {
-    return '\'' + str + '\'';
 }
 
 function addDaysToDate(date, days) {
@@ -36,21 +36,21 @@ function Kibana(kibanaUrl) {
         var g = {
             refreshInterval: {
                 display: 'Off',
-                pause: '!f',
+                pause: false,
                 section: 0,
                 value: 0
             },
             time: {
-                from: singleQuotedString(minTime),
+                from: minTime,
                 mode: 'absolute',
-                to: singleQuotedString(maxTime)
+                to: maxTime
             }
         };
 
         var query = {
             query_string: {
-                analyze_wildcard: '!t',
-                query: singleQuotedString('_type:' + username)
+                analyze_wildcard: true,
+                query: '_type:' + username
             }
         };
 
@@ -66,8 +66,8 @@ function Kibana(kibanaUrl) {
             {
                 id: 2,
                 params: {
-                    customInterval: singleQuotedString('2h'),
-                    field: singleQuotedString('@timestamp'),
+                    customInterval: '2h',
+                    field: '@timestamp',
                     interval: 'd',
                     min_doc_count: 1
                 },
@@ -77,18 +77,18 @@ function Kibana(kibanaUrl) {
         ];
 
         var params = {
-            addLegend: '!f',
-            addTimeMarker: '!f',
-            addTooltip: '!t',
-            defaultYExtents: '!f',
-            drawLinesBetweenPoints: '!t',
+            addLegend: false,
+            addTimeMarker: false,
+            addTooltip: true,
+            defaultYExtents: false,
+            drawLinesBetweenPoints: true,
             interpolate: 'linear',
             radiusRatio: 9,
             scale: 'linear',
-            setYExtents: '!t',
-            shareYAxis: '!t',
-            showCircles: '!t',
-            smoothLines: '!f',
+            setYExtents: true,
+            shareYAxis: true,
+            showCircles: true,
+            smoothLines: false,
             yAxis: {
                 max: bounds.maxWeight + 1,
                 min: bounds.minWeight - 1
@@ -96,7 +96,7 @@ function Kibana(kibanaUrl) {
         };
 
         var a = {
-            linked: '!f',
+            linked: false,
             query: query,
             vis: {
                 aggs: aggs,
