@@ -20,10 +20,19 @@ function singleQuotedString(str) {
     return '\'' + str + '\'';
 }
 
+function addDaysToDate(date, days) {
+    var parsedDate = new Date(Date.parse(date));
+    parsedDate.setDate(parsedDate.getDate() + days);
+    return parsedDate.toISOString();
+}
+
 function Kibana(kibanaUrl) {
     this.kibanaUrl = kibanaUrl;
 
     this.getIframeUrl = function (username, bounds) {
+        var minTime = addDaysToDate(bounds.minTime, -2);
+        var maxTime = addDaysToDate(bounds.maxTime, 5);
+
         var g = {
             refreshInterval: {
                 display: 'Off',
@@ -32,9 +41,9 @@ function Kibana(kibanaUrl) {
                 value: 0
             },
             time: {
-                from: singleQuotedString(bounds.minTime),
+                from: singleQuotedString(minTime),
                 mode: 'absolute',
-                to: singleQuotedString(bounds.maxTime)
+                to: singleQuotedString(maxTime)
             }
         };
 
