@@ -46,12 +46,7 @@ function Elasticsearch(esUrl) {
     this.recentUserData = function (user, onSuccess) {
         $.post(this.esUrl + '/weight/' + user + '/_search', allRecordsOrderedByTimestampQuery, function (data) {
             var userData = data['hits']['hits'].map(function (hit) {
-                var source = hit['_source'];
-                return {
-                    user: user,
-                    date: source['date'],
-                    weight: source['weight']
-                };
+                return hit['_source'];
             });
 
             onSuccess(new WeightRecordList(userData));

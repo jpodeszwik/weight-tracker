@@ -1,6 +1,6 @@
 var WeightRecord = Backbone.Model.extend({
     url: function() {
-        return this.urlRoot + 'weight/' + this.get('user') + '/' + this.get('date');
+        return this.urlRoot + 'weight/' + this.get('username') + '/' + this.get('date');
     },
 
     //TODO: move this outside
@@ -11,7 +11,7 @@ var WeightRecord = Backbone.Model.extend({
     defaults: {
         date: undefined,
         weight: undefined,
-        user: undefined
+        username: undefined
     }
 });
 
