@@ -1,13 +1,14 @@
 $(function () {
     var es = new Elasticsearch('http://zbiki.ddns.net');
     var kibana = new Kibana('http://zbiki.ddns.net/kibana4');
+    var uri = new URI();
 
-    function updateRecentData() {
-        var username = $('.user-selector').val();
+    function loadData(username) {
         es.recentUserData(username, function (weightRecordListModel) {
-            $('.recent-data').find('tbody').remove();
+            var recentDataSelector = $('.recent-data');
+            recentDataSelector.find('tbody').remove();
             var weightRecordListView = new WeightRecordListView({collection: weightRecordListModel});
-            $('.recent-data').append(weightRecordListView.render().el);
+            recentDataSelector.append(weightRecordListView.render().el);
         });
 
         es.getUserBounds(username, function (bounds) {
@@ -17,13 +18,22 @@ $(function () {
     }
 
     es.listUsers(function (users) {
-        users.forEach(function (user) {
-            $('.user-selector').append($('<option>', {value: user}).text(user))
-        });
-        updateRecentData();
-    });
+        var uriParams = uri.search(true);
+        if(!('username' in uriParams)) {
+            window.location.replace(uri.search({username: users[0]}));
+        }
 
-    $('.user-selector').change(function () {
-        updateRecentData();
+        var userSelector = $('.user-selector');
+        users.forEach(function (user) {
+            userSelector.append($('<option>', {value: user}).text(user))
+        });
+
+        var username = uriParams['username'];
+        userSelector.val(username);
+
+        userSelector.change(function () {
+            window.location.replace(uri.search({username: userSelector.val()}));
+        });
+        loadData(username);
     });
 });

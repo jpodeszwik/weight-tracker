@@ -20,6 +20,7 @@
     "bootstrap": "~3.3.6",
     "backbone": "~1.2.3",
     "underscore": "~1.8.3",
-    "backbone.marionette": "marionette#~2.4.4"
+    "backbone.marionette": "marionette#~2.4.4",
+    "urijs": "uri.js#~1.17.0"
   }
 }
