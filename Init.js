@@ -5,6 +5,7 @@ $(function () {
 
     function loadData(username) {
         es.recentUserData(username, function (weightRecordListModel) {
+            weightRecordListModel.unshift(new WeightRecord({username: username}));
             var recentDataSelector = $('.recent-data');
             recentDataSelector.find('tbody').remove();
             var weightRecordListView = new WeightRecordListView({collection: weightRecordListModel});
@@ -14,12 +15,11 @@ $(function () {
         es.getUserBounds(username, function (bounds) {
             $(".kibana-iframe").attr("src", kibana.getIframeUrl(username, bounds));
         });
-
     }
 
     es.listUsers(function (users) {
         var uriParams = uri.search(true);
-        if(!('username' in uriParams)) {
+        if (!('username' in uriParams)) {
             window.location.replace(uri.search({username: users[0]}));
         }
 

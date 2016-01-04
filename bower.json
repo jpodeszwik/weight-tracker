@@ -21,6 +21,7 @@
     "backbone": "~1.2.3",
     "underscore": "~1.8.3",
     "backbone.marionette": "marionette#~2.4.4",
-    "urijs": "uri.js#~1.17.0"
+    "urijs": "uri.js#~1.17.0",
+    "eonasdan-bootstrap-datetimepicker": "~4.17.37"
   }
 }

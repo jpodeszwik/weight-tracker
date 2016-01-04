@@ -12,12 +12,12 @@ var WeightRecordView = Marionette.ItemView.extend({
         'click @ui.deleteButton': 'deleteRecord'
     },
 
-    updateRecord: function() {
+    updateRecord: function () {
         this.model.set('weight', this.ui.weightInput.val());
         this.model.save();
     },
 
-    deleteRecord: function() {
+    deleteRecord: function () {
         this.model.destroy();
     },
 
@@ -29,7 +29,48 @@ var WeightRecordView = Marionette.ItemView.extend({
     }
 });
 
+var EmptyWeightRecordView = Marionette.ItemView.extend({
+    tagName: 'tr',
+
+    ui: {
+        addButton: '.add-record',
+        weightInput: '.weight-input',
+        dateInput: '.date-input'
+    },
+
+    events: {
+        'click @ui.addButton': 'addRecord'
+    },
+
+    addRecord: function () {
+        this.model.set('weight', this.ui.weightInput.val());
+        this.model.set('date', this.ui.dateInput.val());
+        this.model.save();
+    },
+
+    template: function (model) {
+        return _.template('<td><input type="text" class="form-control date-input"/></td><td><input type="text" class="form-control weight-input"/></td><td><button type="button" class="btn btn-success add-record"><span class="glyphicon glyphicon-plus"></span>Add record</button></td>')({
+            date: model.date,
+            weight: model.weight
+        });
+    },
+
+    onRender: function () {
+        this.ui.dateInput.datetimepicker({
+            format: 'YYYY-MM-DD',
+            defaultDate: moment()
+        });
+    }
+});
+
 var WeightRecordListView = Marionette.CollectionView.extend({
     tagName: 'tbody',
-    childView: WeightRecordView
+    getChildView: function (item) {
+        if (item.get('date') === undefined) {
+            return EmptyWeightRecordView;
+        }
+        else {
+            return WeightRecordView;
+        }
+    }
 });
