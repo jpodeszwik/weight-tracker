@@ -5,7 +5,7 @@ var allRecordsOrderedByTimestampQuery = '\
        },\
        "sort" : [\
            {\
-               "@timestamp": {\
+               "date": {\
                    "order" : "desc"\
                }\
            }\
@@ -18,10 +18,10 @@ var boundsAggregation = '\
            "match_all" : {}\
        },\
        "aggregations" : {\
-           "min_value" : { "min" : { "field" : "value" } },\
-           "max_value" : { "max" : { "field" : "value" } },\
-           "min_timestamp": {"min" : { "field" : "@timestamp" }},\
-           "max_timestamp": {"max" : { "field" : "@timestamp" }}\
+           "min_weight" : { "min" : { "field" : "weight" } },\
+           "max_weight" : { "max" : { "field" : "weight" } },\
+           "min_date": {"min" : { "field" : "date" }},\
+           "max_date": {"max" : { "field" : "date" }}\
        },\
        "size": 0\
    }';
@@ -48,8 +48,9 @@ function Elasticsearch(esUrl) {
             var userData = data['hits']['hits'].map(function (hit) {
                 var source = hit['_source'];
                 return {
-                    date: source['@timestamp'],
-                    weight: source['value']
+                    user: user,
+                    date: source['date'],
+                    weight: source['weight']
                 };
             });
 
@@ -62,10 +63,10 @@ function Elasticsearch(esUrl) {
             var aggregations = data['aggregations'];
 
             var bounds = {
-                minWeight: aggregations['min_value']['value'],
-                maxWeight: aggregations['max_value']['value'],
-                minTime: aggregations['min_timestamp']['value_as_string'],
-                maxTime: aggregations['max_timestamp']['value_as_string']
+                minWeight: aggregations['min_weight']['value'],
+                maxWeight: aggregations['max_weight']['value'],
+                minDate: aggregations['min_date']['value_as_string'],
+                maxDate: aggregations['max_date']['value_as_string']
             };
 
             onSuccess(bounds);

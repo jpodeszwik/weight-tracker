@@ -30,8 +30,8 @@ function Kibana(kibanaUrl) {
     this.kibanaUrl = kibanaUrl;
 
     this.getIframeUrl = function (username, bounds) {
-        var minTime = addDaysToDate(bounds.minTime, -2);
-        var maxTime = addDaysToDate(bounds.maxTime, 5);
+        var minTime = addDaysToDate(bounds.minDate, -2);
+        var maxTime = addDaysToDate(bounds.maxDate, 5);
 
         var g = {
             refreshInterval: {
@@ -58,7 +58,7 @@ function Kibana(kibanaUrl) {
             {
                 id: 1,
                 params: {
-                    field: 'value'
+                    field: 'weight'
                 },
                 schema: 'metric',
                 type: 'avg'
@@ -67,7 +67,7 @@ function Kibana(kibanaUrl) {
                 id: 2,
                 params: {
                     customInterval: '2h',
-                    field: '@timestamp',
+                    field: 'date',
                     interval: 'd',
                     min_doc_count: 1
                 },
