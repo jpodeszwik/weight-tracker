@@ -1,10 +1,11 @@
 $(function () {
-    var elasticsearchUrl = 'http://zbiki.ddns.net';
-    
+    var uri = new URI();
+
+    var elasticsearchUrl = uri.protocol() + '://zbiki.ddns.net';
+
     Backbone.Model.prototype.urlRoot = elasticsearchUrl;
     var es = new Elasticsearch(elasticsearchUrl);
-    var kibana = new Kibana('http://zbiki.ddns.net/kibana4');
-    var uri = new URI();
+    var kibana = new Kibana(uri.protocol() + '://zbiki.ddns.net/kibana4');
 
     function loadData(username) {
         es.recentUserData(username, function (weightRecordListModel) {
