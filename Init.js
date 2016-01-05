@@ -1,5 +1,8 @@
 $(function () {
-    var es = new Elasticsearch('http://zbiki.ddns.net');
+    var elasticsearchUrl = 'http://zbiki.ddns.net';
+    
+    Backbone.Model.prototype.urlRoot = elasticsearchUrl;
+    var es = new Elasticsearch(elasticsearchUrl);
     var kibana = new Kibana('http://zbiki.ddns.net/kibana4');
     var uri = new URI();
 

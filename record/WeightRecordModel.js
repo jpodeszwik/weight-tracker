@@ -1,10 +1,7 @@
 var WeightRecord = Backbone.Model.extend({
     url: function() {
-        return this.urlRoot + 'weight/' + this.get('username') + '/' + this.get('date');
+        return this.urlRoot + '/weight/' + this.get('username') + '/' + this.get('date');
     },
-
-    //TODO: move this outside
-    urlRoot: 'http://zbiki.ddns.net/',
 
     idAttribute: "date",
 
