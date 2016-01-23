@@ -1,3 +1,28 @@
+function showSuccess(message) {
+    BootstrapDialog.show({
+        type: BootstrapDialog.TYPE_SUCCESS,
+        title: 'Success',
+        message: message
+    });
+}
+
+function showError(message) {
+    BootstrapDialog.show({
+        type: BootstrapDialog.TYPE_DANGER,
+        title: 'Error',
+        message: message
+    });
+}
+
+var modelSaveCallbacks = {
+    success: function (model, response) {
+        showSuccess(JSON.stringify(response))
+    },
+    error: function (model, response) {
+        showError(JSON.stringify(response))
+    }
+}
+
 var WeightRecordView = Marionette.ItemView.extend({
     tagName: 'tr',
 
@@ -14,11 +39,11 @@ var WeightRecordView = Marionette.ItemView.extend({
 
     updateRecord: function () {
         this.model.set('weight', this.ui.weightInput.val());
-        this.model.save();
+        this.model.save(null, modelSaveCallbacks);
     },
 
     deleteRecord: function () {
-        this.model.destroy();
+        this.model.destroy(modelSaveCallbacks);
     },
 
     template: function (model) {
@@ -45,7 +70,7 @@ var EmptyWeightRecordView = Marionette.ItemView.extend({
     addRecord: function () {
         this.model.set('weight', this.ui.weightInput.val());
         this.model.set('date', this.ui.dateInput.val());
-        this.model.save();
+        this.model.save(null, modelSaveCallbacks);
     },
 
     template: function (model) {
