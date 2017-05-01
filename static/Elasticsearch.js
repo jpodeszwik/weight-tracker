@@ -30,15 +30,7 @@ function Elasticsearch(esUrl) {
     this.esUrl = esUrl;
 
     this.listUsers = function (onSuccess) {
-        $.get(this.esUrl + '/weight/_mappings', function (data) {
-            var users = Object.keys(data).map(function (index) {
-                return Object.keys(data[index]['mappings']);
-            }).reduce(function (a, b) {
-                return a.concat(b);
-            }, []).filter(function (type) {
-                return type != '_default_'
-            });
-
+        $.get('/api/users', function (users) {
             onSuccess(users);
         });
     };

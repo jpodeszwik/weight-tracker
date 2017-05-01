@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/jpodeszwik/weight-tracker#readme",
   "dependencies": {
+    "elasticsearch": "^13.0.0",
     "express": "^4.15.2"
   }
 }
