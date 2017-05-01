@@ -28,16 +28,7 @@ function Elasticsearch(esUrl) {
     };
 
     this.getUserBounds = function (user, onSuccess) {
-        $.post(this.esUrl + '/weight/' + user + '/_search', boundsAggregation, function (data) {
-            var aggregations = data['aggregations'];
-
-            var bounds = {
-                minWeight: aggregations['min_weight']['value'],
-                maxWeight: aggregations['max_weight']['value'],
-                minDate: aggregations['min_date']['value_as_string'],
-                maxDate: aggregations['max_date']['value_as_string']
-            };
-
+        $.get(`/api/users/${user}/bounds`, function (bounds) {
             onSuccess(bounds);
         });
     }
