@@ -1,17 +1,3 @@
-var allRecordsOrderedByTimestampQuery = '\
-   {\
-       "query": {\
-           "match_all" : {}\
-       },\
-       "sort" : [\
-           {\
-               "date": {\
-                   "order" : "desc"\
-               }\
-           }\
-       ]\
-   }';
-
 var boundsAggregation = '\
    {\
        "query": {\
@@ -36,11 +22,7 @@ function Elasticsearch(esUrl) {
     };
 
     this.recentUserData = function (user, onSuccess) {
-        $.post(this.esUrl + '/weight/' + user + '/_search', allRecordsOrderedByTimestampQuery, function (data) {
-            var userData = data['hits']['hits'].map(function (hit) {
-                return hit['_source'];
-            });
-
+        $.get(`/api/users/${user}/records`, function (userData) {
             onSuccess(new WeightRecordList(userData));
         });
     };

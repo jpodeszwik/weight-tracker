@@ -18,4 +18,27 @@ function listUsers() {
   });
 };
 
-module.exports = {listUsers};
+function recentUserData(username) {
+  return client.search({
+    index: 'weight',
+    type: username,
+    body: {
+      query: {
+        match_all: {}
+      },
+      sort: [
+        {
+          date: {
+            order: 'desc'
+          }
+        }
+      ]
+    }
+  }).then(function (data) {
+    return data['hits']['hits'].map(function (hit) {
+        return hit['_source'];
+    });
+  });
+}
+
+module.exports = {listUsers, recentUserData};
