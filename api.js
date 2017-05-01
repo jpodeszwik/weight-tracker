@@ -1,5 +1,7 @@
 var express = require('express');
+
 var {listUsers, recentUserData, userBounds} = require('./elastic')
+var {getChartUrl} = require('./kibana')
 
 var api = express();
 
@@ -19,9 +21,9 @@ api.get('/users/:username/records', function(req, res) {
   });
 });
 
-api.get('/users/:username/bounds', function(req, res) {
-  userBounds(req.params.username).then(function(data) {
-    res.send(data);
+api.get('/users/:username/chartUrl', function(req, res) {
+  userBounds(req.params.username).then(function(bounds) {
+    res.send({url: getChartUrl(req.params.username, bounds)});
   }, function(err) {
     res.status(500).send(err);
   });

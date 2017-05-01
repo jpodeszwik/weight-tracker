@@ -2,7 +2,7 @@ $(function () {
     var uri = new URI();
 
     var es = new Elasticsearch();
-    var kibana = new Kibana(uri.protocol() + '://zbiki.ddns.net/kibana4');
+    var kibana = new Kibana();
 
     function loadData(username) {
         es.recentUserData(username, function (weightRecordListModel) {
@@ -13,8 +13,8 @@ $(function () {
             recentDataSelector.append(weightRecordListView.render().el);
         });
 
-        es.getUserBounds(username, function (bounds) {
-            $(".kibana-iframe").attr("src", kibana.getIframeUrl(username, bounds));
+        kibana.getIframeUrl(username, function (url) {
+            $(".kibana-iframe").attr("src", url);
         });
     }
 

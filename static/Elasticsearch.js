@@ -11,10 +11,4 @@ function Elasticsearch() {
             onSuccess(new WeightRecordList(userData));
         });
     };
-
-    this.getUserBounds = function (user, onSuccess) {
-        $.get(`/api/users/${user}/bounds`, function (bounds) {
-            onSuccess(bounds);
-        });
-    }
 }
