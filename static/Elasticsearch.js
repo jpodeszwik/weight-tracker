@@ -1,20 +1,5 @@
-var boundsAggregation = '\
-   {\
-       "query": {\
-           "match_all" : {}\
-       },\
-       "aggregations" : {\
-           "min_weight" : { "min" : { "field" : "weight" } },\
-           "max_weight" : { "max" : { "field" : "weight" } },\
-           "min_date": {"min" : { "field" : "date" }},\
-           "max_date": {"max" : { "field" : "date" }}\
-       },\
-       "size": 0\
-   }';
 
-function Elasticsearch(esUrl) {
-    this.esUrl = esUrl;
-
+function Elasticsearch() {
     this.listUsers = function (onSuccess) {
         $.get('/api/users', function (users) {
             onSuccess(users);
