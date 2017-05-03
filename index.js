@@ -30,16 +30,16 @@ app.use(espressSession({ secret: 'SECRET' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static('static'))
+
 app.use('/api', api);
 
-
-app.get('/isAuthenticated', function(req, res) {
-  if (req.isAuthenticated()) {
+app.get('/',function(req,res){
+  if (!req.isAuthenticated()) {
+    res.redirect('/auth/google');
+  } else {
     console.log(req.user);
+    res.sendFile(__dirname + '/static/index.html');
   }
-  res.send({isAuthenticated: req.isAuthenticated()});
-
 });
 
 app.get('/auth/google',
@@ -51,5 +51,5 @@ app.get('/auth/google/callback',
   function(req, res) {
     res.redirect('/');
   });
-
+app.use(express.static('static'))
 app.listen(3000);

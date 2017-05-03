@@ -1,12 +1,6 @@
 $(function () {
     var uri = new URI();
 
-    $.get('/isAuthenticated', function (data) {
-      if (false === data.isAuthenticated) {
-        window.location.replace('/auth/google');
-      }
-    });
-
     var es = new Elasticsearch();
     var kibana = new Kibana();
 
