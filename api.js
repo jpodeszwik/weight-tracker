@@ -18,11 +18,45 @@ api.post('/weights', function(req, res) {
 });
 
 api.get('/weights', function(req, res) {
-  Weight.find({}).exec(function (result, err) {
+  Weight.find({userID: req.user.id}).exec(function (result, err) {
     if(err) {
       res.status(500).send(err);
     } else {
       res.send(result);
+    }
+  });
+});
+
+api.get('/weights/:date', function(req, res) {
+  Weight.find({userID: req.user.id, date: req.params.date}).exec(function (result, err) {
+    if(err) {
+      res.status(500).send(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+api.put('/weights/:date', function(req, res) {
+  Weight.findOneAndUpdate(
+    {userID: req.user.id, date: req.params.date},
+    {userID: req.user.id, date: req.params.date, value: req.body.value},
+    {upsert:true},
+    function(err, doc) {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.send(doc);
+    }
+  });
+});
+
+api.delete('/weights/:date', function(req, res) {
+  Weight.remove({userID: req.user.id, date: req.params.date}).exec(function (err) {
+    if(err) {
+      res.status(500).send(err);
+    } else {
+      res.send('Success');
     }
   });
 });
