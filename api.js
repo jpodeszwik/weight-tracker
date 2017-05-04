@@ -1,7 +1,5 @@
 var express = require('express');
 
-var {listUsers, recentUserData, userBounds} = require('./elastic')
-var {getChartUrl} = require('./kibana')
 var Weight = require('./mongo');
 
 var api = express();
@@ -18,7 +16,7 @@ api.post('/weights', function(req, res) {
 });
 
 api.get('/weights', function(req, res) {
-  Weight.find({userID: req.user.id}).exec(function (result, err) {
+  Weight.find({userID: req.user.id}).exec(function (err, result) {
     if(err) {
       res.status(500).send(err);
     } else {
@@ -28,7 +26,7 @@ api.get('/weights', function(req, res) {
 });
 
 api.get('/weights/:date', function(req, res) {
-  Weight.find({userID: req.user.id, date: req.params.date}).exec(function (result, err) {
+  Weight.find({userID: req.user.id, date: req.params.date}).exec(function (err, result) {
     if(err) {
       res.status(500).send(err);
     } else {
@@ -58,22 +56,6 @@ api.delete('/weights/:date', function(req, res) {
     } else {
       res.send('Success');
     }
-  });
-});
-
-api.get('/users/:username/records', function(req, res) {
-  recentUserData(req.params.username).then(function(data) {
-    res.send(data);
-  }, function(err) {
-    res.status(500).send(err);
-  });
-});
-
-api.get('/users/:username/chartUrl', function(req, res) {
-  userBounds(req.params.username).then(function(bounds) {
-    res.send({url: getChartUrl(req.params.username, bounds)});
-  }, function(err) {
-    res.status(500).send(err);
   });
 });
 
