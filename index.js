@@ -2,9 +2,11 @@ var express = require('express');
 
 var api = require('./api');
 var espressSession = require('express-session');
+var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -29,6 +31,7 @@ app.use(cookieParser());
 app.use(espressSession({ secret: 'SECRET' }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(bodyParser.json());
 
 
 app.use('/api', api);
