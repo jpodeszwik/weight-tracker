@@ -22,7 +22,7 @@ api.post('/weights', function(req, res) {
 });
 
 api.get('/weights', function(req, res) {
-  Weight.find({userID: req.user.id}).exec(function (err, records) {
+  Weight.find({userID: req.user.id}).sort({date: -1}).exec(function (err, records) {
     if(err) {
       res.status(500).send(err);
     } else {
