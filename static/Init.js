@@ -4,8 +4,7 @@ $(function () {
         return {date: new Date(data.date), value: data.value};
     })
     MG.data_graphic({
-        title: "Downloads",
-        description: "This graphic shows a time-series of downloads.",
+        title: "Weights",
         data: parsed,
         width: 600,
         height: 400,
@@ -14,7 +13,7 @@ $(function () {
         y_accessor: 'value',
     });
 
-    var weightRecordListModel = new WeightRecordList(parsed);
+    var weightRecordListModel = new WeightRecordList(userData);
     weightRecordListModel.unshift(new WeightRecord({}));
     var recentDataSelector = $('.recent-data');
     recentDataSelector.find('tbody').remove();

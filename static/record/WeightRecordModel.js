@@ -1,14 +1,13 @@
 var WeightRecord = Backbone.Model.extend({
     url: function() {
-        return this.urlRoot + '/weight/' + this.get('username') + '/' + this.get('date');
+        return `/api/weights/${this.get('date')}`;
     },
 
     idAttribute: "date",
 
     defaults: {
         date: undefined,
-        weight: undefined,
-        username: undefined
+        weight: undefined
     }
 });
 

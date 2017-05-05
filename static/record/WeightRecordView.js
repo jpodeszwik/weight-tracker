@@ -38,7 +38,7 @@ var WeightRecordView = Marionette.ItemView.extend({
     },
 
     updateRecord: function () {
-        this.model.set('weight', this.ui.weightInput.val());
+        this.model.set('value', this.ui.weightInput.val());
         this.model.save(null, modelSaveCallbacks);
     },
 
@@ -49,7 +49,7 @@ var WeightRecordView = Marionette.ItemView.extend({
     template: function (model) {
         return _.template('<td><%= date %></td><td><input type="text" class="form-control weight-input" value=<%= weight %>></input></td><td><button type="button" class="btn btn-success update-record"><span class="glyphicon glyphicon-save"></span>Update record</button></td><td><button type="button" class="btn btn-danger delete-record"><span class="glyphicon glyphicon-remove"></span>Remove record</button></td>')({
             date: model.date,
-            weight: model.weight
+            weight: model.value
         });
     }
 });
@@ -68,7 +68,7 @@ var EmptyWeightRecordView = Marionette.ItemView.extend({
     },
 
     addRecord: function () {
-        this.model.set('weight', this.ui.weightInput.val());
+        this.model.set('value', this.ui.weightInput.val());
         this.model.set('date', this.ui.dateInput.val());
         this.model.save(null, modelSaveCallbacks);
     },
@@ -76,7 +76,7 @@ var EmptyWeightRecordView = Marionette.ItemView.extend({
     template: function (model) {
         return _.template('<td><input type="text" class="form-control date-input"/></td><td><input type="text" class="form-control weight-input"/></td><td><button type="button" class="btn btn-success add-record"><span class="glyphicon glyphicon-plus"></span>Add record</button></td>')({
             date: model.date,
-            weight: model.weight
+            weight: model.value
         });
     },
 
