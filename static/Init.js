@@ -3,6 +3,10 @@ $(function () {
     var parsed = userData.map(function (data) {
         return {date: new Date(data.date), value: data.value};
     })
+
+    var weights = userData.map(function(data) {
+      return data.value;
+    });
     MG.data_graphic({
         title: "Weights",
         data: parsed,
@@ -12,6 +16,8 @@ $(function () {
         x_accessor: 'date',
         y_accessor: 'value',
         utc_time: true,
+        min_y: Math.min.apply(Math, weights)-5,
+        max_y: Math.max.apply(Math, weights)+5,
     });
 
     var weightRecordListModel = new WeightRecordList(userData);
