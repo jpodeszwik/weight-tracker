@@ -8,9 +8,9 @@ $(function () {
       return data.value;
     });
     MG.data_graphic({
-        title: "Weights",
+        title: "Weight over time",
         data: parsed,
-        width: 600,
+        width: 1000,
         height: 400,
         target: '#chart',
         x_accessor: 'date',
