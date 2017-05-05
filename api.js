@@ -50,7 +50,7 @@ api.put('/weights/:date', function(req, res) {
     if (err) {
       res.status(500).send(err);
     } else {
-      res.send(recordToResult(doc));
+      res.status(200).send();
     }
   });
 });

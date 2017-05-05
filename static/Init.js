@@ -11,6 +11,7 @@ $(function () {
         target: '#chart',
         x_accessor: 'date',
         y_accessor: 'value',
+        utc_time: true,
     });
 
     var weightRecordListModel = new WeightRecordList(userData);

@@ -2,7 +2,7 @@ function showSuccess(message) {
     BootstrapDialog.show({
         type: BootstrapDialog.TYPE_SUCCESS,
         title: 'Success',
-        message: message
+        message: ''
     });
 }
 
@@ -14,7 +14,8 @@ function showError(message) {
     });
 }
 
-var modelSaveCallbacks = {
+var modelSaveOptions = {
+    dataType: 'text',
     success: function (model, response) {
         showSuccess(JSON.stringify(response))
     },
@@ -39,11 +40,11 @@ var WeightRecordView = Marionette.ItemView.extend({
 
     updateRecord: function () {
         this.model.set('value', this.ui.weightInput.val());
-        this.model.save(null, modelSaveCallbacks);
+        this.model.save(null, modelSaveOptions);
     },
 
     deleteRecord: function () {
-        this.model.destroy(modelSaveCallbacks);
+        this.model.destroy(modelSaveOptions);
     },
 
     template: function (model) {
@@ -70,7 +71,7 @@ var EmptyWeightRecordView = Marionette.ItemView.extend({
     addRecord: function () {
         this.model.set('value', this.ui.weightInput.val());
         this.model.set('date', this.ui.dateInput.val());
-        this.model.save(null, modelSaveCallbacks);
+        this.model.save(null, modelSaveOptions);
     },
 
     template: function (model) {
