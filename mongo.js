@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/weights');
+mongoose.connect(`mongodb://${process.env.MONGO}/weights`);
 
 var WeightSchema = new mongoose.Schema({
   userID: String,
