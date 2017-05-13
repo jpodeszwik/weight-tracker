@@ -7,11 +7,11 @@ var api = express();
 
 function recordToResult(record) {
   var parsedDate = dateFormat(record.date, "yyyy-mm-dd");
-  return {date: parsedDate, value: record.value};
+  return {date: parsedDate, values: record.values};
 }
 
 api.post('/weights', function(req, res) {
-  var weight = new Weight({userID: req.user.id, date: req.body.date, value: req.body.value});
+  var weight = new Weight({userID: req.user.id, date: req.body.date, values: req.body.values});
   weight.save(function(err) {
     if(err) {
       res.status(500).send(err);
@@ -48,7 +48,7 @@ api.get('/weights/:date', function(req, res) {
 api.put('/weights/:date', function(req, res) {
   Weight.findOneAndUpdate(
     {userID: req.user.id, date: req.params.date},
-    {userID: req.user.id, date: req.params.date, value: req.body.value},
+    {userID: req.user.id, date: req.params.date, values: req.body.values},
     {upsert:true},
     function(err, doc) {
     if (err) {

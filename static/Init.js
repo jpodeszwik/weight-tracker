@@ -1,11 +1,11 @@
 $(function () {
   $.get('/api/weights', function (userData) {
     var parsed = userData.map(function (data) {
-        return {date: new Date(data.date), value: data.value};
+        return {date: new Date(data.date), value: data.values.weight};
     })
 
     var weights = userData.map(function(data) {
-      return data.value;
+      return data.values.weight;
     });
     MG.data_graphic({
         title: "Weight over time",
