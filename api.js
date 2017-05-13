@@ -32,11 +32,15 @@ api.get('/weights', function(req, res) {
 });
 
 api.get('/weights/:date', function(req, res) {
-  Weight.find({userID: req.user.id, date: req.params.date}).exec(function (err, record) {
+  Weight.find({userID: req.user.id, date: req.params.date}).exec(function (err, records) {
     if(err) {
       res.status(500).send(err);
     } else {
-      res.send(recordToResult(record));
+      if (0 === records.length) {
+        res.status(404).send({message: 'not found'});
+      } else {
+        res.send(recordToResult(records[0]));
+      }
     }
   });
 });
