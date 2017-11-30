@@ -1,22 +1,32 @@
 <template>
   <div id="app">
     <header>
-      <span>Vue.js PWA</span>
+      <center><span>Weight Tracker</span></center>
     </header>
     <main>
       <img src="./assets/logo.png" alt="Vue.js PWA">
-      <hello></hello>
+      <sign-in v-if="!isAuthenicated"></sign-in>
+      <weight-list v-if="isAuthenicated"></weight-list>
     </main>
   </div>
 </template>
 
 <script>
-import Hello from './components/Hello';
+import { mapGetters } from 'vuex';
+
+import WeightList from './components/WeightList';
+import SignIn from './components/SignIn';
 
 export default {
+  computed: {
+    ...mapGetters({
+      isAuthenicated: 'isAuthenticated',
+    }),
+  },
   name: 'app',
   components: {
-    Hello,
+    WeightList,
+    SignIn,
   },
 };
 </script>
