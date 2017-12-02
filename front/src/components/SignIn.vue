@@ -22,15 +22,30 @@ export default {
   },
   methods: {
     onSignInSuccess(googleUser) {
-      const idToken = googleUser.getAuthResponse().id_token; // etc etc
-      console.log(idToken);
-      this.setAuthenticated();
+      const token = googleUser.getAuthResponse().id_token;
+      this.loginOnBackend(token);
     },
     onSignInError(error) {
       console.error('authentication error', error);
     },
+    loginOnBackend(token) {
+      const body = JSON.stringify({ token });
+
+      fetch(`${process.env.API_URL}/login`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body,
+        })
+        .then((response) => {
+          if (response.ok) {
+            this.setToken(token);
+          }
+        });
+    },
     ...mapMutations({
-      setAuthenticated: 'setAuthenticated',
+      setToken: 'setToken',
     }),
   },
 };

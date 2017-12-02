@@ -1,6 +1,7 @@
 /* eslint no-param-reassign: ["error", { "props": false }] */
-const setAuthenticated = (state) => {
-  state.authenticated = true;
+
+const setToken = (state, token) => {
+  state.token = token;
 };
 
-export default setAuthenticated;
+export default setToken;

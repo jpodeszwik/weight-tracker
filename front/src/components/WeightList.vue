@@ -11,11 +11,7 @@
 </template>
 
 <script>
-  const items = [
-    { date: '2017-11-27', weight: 81 },
-    { date: '2017-11-26', weight: 83 },
-    { date: '2017-11-25', weight: 80 },
-  ];
+  const items = [];
 
   const fields = [
     'date',
@@ -34,11 +30,26 @@
         fields,
       };
     },
+    mounted() {
+      this.fetchRows();
+    },
     methods: {
       deleteRow(row) {
         const message = `deleting ${row.item.date}`;
         this.items = this.items.filter(item => item.date !== row.item.date);
         console.log(message);
+      },
+      fetchRows() {
+        fetch(`${process.env.API_URL}/api/weights`, { credentials: 'include' })
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('response error');
+          })
+          .then((newItems) => {
+            this.items = newItems.map(item => ({ date: item.date, weight: item.values.weight }));
+          });
       },
     },
   };

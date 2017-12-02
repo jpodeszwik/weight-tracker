@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import isAuthenticated from './getters';
-import setAuthenticated from './mutations';
+import setToken from './mutations';
 
 Vue.use(Vuex);
 
 const state = {
-  authenticated: false,
+  token: null,
 };
 
 export default new Vuex.Store({
@@ -14,7 +14,7 @@ export default new Vuex.Store({
     isAuthenticated,
   },
   mutations: {
-    setAuthenticated,
+    setToken,
   },
   state,
 });

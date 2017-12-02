@@ -4,6 +4,7 @@ var api = require('./api');
 var espressSession = require('express-session');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var cors = require('cors');
 var passport = require('passport');
 var CustomStrategy = require('passport-custom')
 
@@ -43,11 +44,11 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
-
 var app = express();
 
 app.use(cookieParser());
 app.use(espressSession({ secret: 'SECRET' }));
+app.use(cors({ credentials: true, origin: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.json());
@@ -61,7 +62,7 @@ app.post('/login',
     }
 );
 
-//app.use('/api', api);
+app.use('/api', api);
 
 app.get('/',function(req,res){
   if (!req.isAuthenticated()) {
