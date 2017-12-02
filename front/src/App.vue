@@ -17,6 +17,8 @@ import { mapGetters } from 'vuex';
 import WeightList from './components/WeightList';
 import SignIn from './components/SignIn';
 
+console.log(`api url: ${process.env.API_URL}`);
+
 export default {
   computed: {
     ...mapGetters({
