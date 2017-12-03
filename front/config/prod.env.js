@@ -1,4 +1,4 @@
 module.exports = {
   NODE_ENV: '"production"',
-  API_URL: '"https://weight-tracker.zbiki.org"',
+  API_URL: '""',
 };
