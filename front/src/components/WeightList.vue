@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-table striped hover :items="items" :fields="fields">
+    <b-table striped hover :items="weightList" :fields="fields">
       <template slot="delete" scope="row">
         <b-button size="xs" variant="danger" @click="deleteRow(row)">Delete</b-button>
       </template>
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  const items = [];
+  import { mapGetters, mapMutations } from 'vuex';
 
   const fields = [
     'date',
@@ -24,9 +24,13 @@
     name: 'weight-list',
     data() {
       return {
-        items,
         fields,
       };
+    },
+    computed: {
+      ...mapGetters({
+        weightList: 'getWeightList',
+      }),
     },
     mounted() {
       this.fetchRows();
@@ -48,10 +52,14 @@
             }
             throw new Error('response error');
           })
-          .then((newItems) => {
-            this.items = newItems.map(item => ({ date: item.date, weight: item.values.weight }));
+          .then((items) => {
+            this.setWeightList(
+              items.map(item => ({ date: item.date, weight: item.values.weight })));
           });
       },
+      ...mapMutations({
+        setWeightList: 'setWeightList',
+      }),
     },
   };
 </script>

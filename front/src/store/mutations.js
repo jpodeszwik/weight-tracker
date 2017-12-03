@@ -4,4 +4,8 @@ const setToken = (state, token) => {
   state.token = token;
 };
 
-export default setToken;
+const setWeightList = (state, weightList) => {
+  state.weightList = weightList;
+};
+
+export default { setToken, setWeightList };
