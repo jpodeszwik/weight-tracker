@@ -35,9 +35,12 @@
     },
     methods: {
       deleteRow(row) {
-        const message = `deleting ${row.item.date}`;
-        this.items = this.items.filter(item => item.date !== row.item.date);
-        console.log(message);
+        fetch(`${process.env.API_URL}/api/weights/${row.item.date}`, { method: 'DELETE', credentials: 'include' })
+          .then((response) => {
+            if (response.ok) {
+              this.fetchRows();
+            }
+          });
       },
       fetchRows() {
         fetch(`${process.env.API_URL}/api/weights`, { credentials: 'include' })
