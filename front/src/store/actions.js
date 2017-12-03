@@ -7,12 +7,13 @@ const fetchWeights = (context) => {
       if (response.ok) {
         return response.json();
       }
+
       throw new Error('could not fetch weights');
     })
     .then((items) => {
-      console.log(items);
       const weightList = items
         .map(item => mapItem(item));
+
       context.commit('setWeightList', weightList);
     })
     .catch((e) => {
