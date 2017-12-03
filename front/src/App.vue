@@ -4,9 +4,8 @@
       <center><span>Weight Tracker</span></center>
     </header>
     <main>
-      <img src="./assets/logo.png" alt="Vue.js PWA">
       <sign-in v-if="!isAuthenicated"></sign-in>
-      <weight-list v-if="isAuthenicated"></weight-list>
+      <weight-application v-if="isAuthenicated"></weight-application>
     </main>
   </div>
 </template>
@@ -14,7 +13,7 @@
 <script>
 import { mapGetters } from 'vuex';
 
-import WeightList from './components/WeightList';
+import WeightApplication from './components/WeightApplication';
 import SignIn from './components/SignIn';
 
 export default {
@@ -25,7 +24,7 @@ export default {
   },
   name: 'app',
   components: {
-    WeightList,
+    WeightApplication,
     SignIn,
   },
 };
