@@ -2,14 +2,14 @@
   <b-container>
     <b-table striped hover :items="weightList" :fields="fields">
       <template slot="delete" scope="row">
-        <b-button size="xs" variant="danger" @click="deleteRow(row)">Delete</b-button>
+        <b-button size="xs" variant="danger" @click="deleteWeight(row.item.date)">Delete</b-button>
       </template>
     </b-table>
   </b-container>
 </template>
 
 <script>
-  import { mapGetters, mapMutations } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
 
   const fields = [
     'date',
@@ -27,39 +27,19 @@
         fields,
       };
     },
+    mounted() {
+      this.fetchWeights();
+    },
     computed: {
       ...mapGetters({
         weightList: 'getWeightList',
       }),
     },
-    mounted() {
-      this.fetchRows();
-    },
     methods: {
-      deleteRow(row) {
-        fetch(`${process.env.API_URL}/api/weights/${row.item.date}`, { method: 'DELETE', credentials: 'include' })
-          .then((response) => {
-            if (response.ok) {
-              this.fetchRows();
-            }
-          });
-      },
-      fetchRows() {
-        fetch(`${process.env.API_URL}/api/weights`, { credentials: 'include' })
-          .then((response) => {
-            if (response.ok) {
-              return response.json();
-            }
-            throw new Error('response error');
-          })
-          .then((items) => {
-            this.setWeightList(
-              items.map(item => ({ date: item.date, weight: item.values.weight })));
-          });
-      },
-      ...mapMutations({
-        setWeightList: 'setWeightList',
-      }),
+      ...mapActions([
+        'deleteWeight',
+        'fetchWeights',
+      ]),
     },
   };
 </script>

@@ -15,6 +15,8 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
+
   export default {
     name: 'weight-upload',
     data() {
@@ -25,19 +27,11 @@
     },
     methods: {
       saveNewRecord() {
-        fetch(`${process.env.API_URL}/api/weights`,
-          {
-            method: 'POST',
-            credentials: 'include',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ date: this.date, values: { weight: this.weight } }),
-          })
-          .then((response) => {
-            if (response.ok) {
-              console.log('ok');
-            }
-          });
+        this.addWeight({ date: this.date, weight: this.weight });
       },
+      ...mapActions({
+        addWeight: 'addWeight',
+      }),
     },
   };
 </script>
