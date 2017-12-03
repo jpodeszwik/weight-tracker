@@ -1,7 +1,5 @@
 FROM node:7
 
-RUN npm install -g bower
-
 RUN mkdir /app
 COPY . /app
 WORKDIR /app
