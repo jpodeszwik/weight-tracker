@@ -1,5 +1,11 @@
 <template>
     <b-container>
+      <b-alert variant="danger"
+             dismissible
+             :show="showAlert"
+             @dismissed="showAlert=false">
+      {{errorMessage}}
+    </b-alert>
       <b-row>
         <b-col>
           <b-form-input v-model="date" type="date"  placeholder="Enter date" />
@@ -15,23 +21,24 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
-
   export default {
     name: 'weight-upload',
     data() {
       return {
         date: new Date().toISOString().split('T')[0],
         weight: '',
+        showAlert: false,
+        errorMessage: '',
       };
     },
     methods: {
       saveNewRecord() {
-        this.addWeight({ date: this.date, weight: this.weight });
+        this.$store.dispatch('addWeight', { date: this.date, weight: this.weight })
+          .catch((e) => {
+            this.showAlert = true;
+            this.errorMessage = e.message;
+          });
       },
-      ...mapActions({
-        addWeight: 'addWeight',
-      }),
     },
   };
 </script>
