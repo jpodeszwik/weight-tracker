@@ -1,19 +1,10 @@
-const mapItem = item => (
-  item.values ? { date: item.date, weight: item.values.weight } : { date: item.date });
+import Api from '../lib/api';
+
+const api = new Api(process.env.API_URL);
 
 const fetchWeights = (context) => {
-  fetch(`${process.env.API_URL}/api/weights`, { credentials: 'include' })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-
-      throw new Error('could not fetch weights');
-    })
-    .then((items) => {
-      const weightList = items
-        .map(item => mapItem(item));
-
+  api.fetchWeights()
+    .then((weightList) => {
       context.commit('setWeightList', weightList);
     })
     .catch((e) => {
@@ -21,15 +12,10 @@ const fetchWeights = (context) => {
     });
 };
 
-
 const deleteWeight = (context, date) => {
-  fetch(`${process.env.API_URL}/api/weights/${date}`, { method: 'DELETE', credentials: 'include' })
-    .then((response) => {
-      if (response.ok) {
-        fetchWeights(context);
-      } else {
-        throw new Error('could not delete weight');
-      }
+  api.deleteWeight(date)
+    .then(() => {
+      fetchWeights(context);
     })
     .catch((e) => {
       console.error(e);
@@ -37,21 +23,9 @@ const deleteWeight = (context, date) => {
 };
 
 const addWeight = (context, { date, weight }) => {
-  const body = JSON.stringify({ date, values: { weight } });
-
-  fetch(`${process.env.API_URL}/api/weights`,
-    {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body,
-    })
-    .then((response) => {
-      if (response.ok) {
-        fetchWeights(context);
-      } else {
-        throw new Error('could not add new record');
-      }
+  api.addWeight(date, weight)
+    .then(() => {
+      fetchWeights(context);
     })
     .catch((e) => {
       console.error(e);
