@@ -1,7 +1,7 @@
 <template>
   <b-container>
-      <weight-upload></weight-upload>
-      <weight-list></weight-list>
+    <weight-upload @error="emitError"></weight-upload>
+    <weight-list @error="emitError"></weight-list>
   </b-container> 
 </template>
 
@@ -14,6 +14,11 @@ export default {
   components: {
     WeightUpload,
     WeightList,
+  },
+  methods: {
+    emitError(errorMessage) {
+      this.$emit('error', errorMessage);
+    },
   },
 };
 </script>

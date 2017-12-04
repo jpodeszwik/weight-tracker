@@ -1,11 +1,5 @@
 <template>
   <b-container>
-    <b-alert variant="danger"
-             dismissible
-             :show="showAlert"
-             @dismissed="showAlert=false">
-      {{errorMessage}}
-    </b-alert>
     <b-table striped hover :items="weightList" :fields="fields">
       <template slot="delete" scope="row">
         <b-button size="xs" variant="danger" @click="deleteWeight(row.item.date)">Delete</b-button>
@@ -31,8 +25,6 @@
     data() {
       return {
         fields,
-        showAlert: false,
-        errorMessage: '',
       };
     },
     mounted() {
@@ -47,22 +39,15 @@
       deleteWeight(date) {
         this.$store.dispatch('deleteWeight', date)
           .catch((e) => {
-            this.showAlert = true;
-            this.errorMessage = e.message;
+            this.$emit('error', e.message);
           });
       },
       fetchWeights() {
         this.$store.dispatch('fetchWeights')
           .catch((e) => {
-            this.showAlert = true;
-            this.errorMessage = e.message;
+            this.$emit('error', e.message);
           });
       },
     },
   };
 </script>
-
-<style>
-    
-</style>
-

@@ -1,11 +1,5 @@
 <template>
     <b-container>
-      <b-alert variant="danger"
-             dismissible
-             :show="showAlert"
-             @dismissed="showAlert=false">
-      {{errorMessage}}
-    </b-alert>
       <b-row>
         <b-col>
           <b-form-input v-model="date" type="date"  placeholder="Enter date" />
@@ -27,16 +21,13 @@
       return {
         date: new Date().toISOString().split('T')[0],
         weight: '',
-        showAlert: false,
-        errorMessage: '',
       };
     },
     methods: {
       saveNewRecord() {
         this.$store.dispatch('addWeight', { date: this.date, weight: this.weight })
           .catch((e) => {
-            this.showAlert = true;
-            this.errorMessage = e.message;
+            this.$emit('error', e.message);
           });
       },
     },
