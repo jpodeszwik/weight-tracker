@@ -5,6 +5,15 @@ var Weight = require('./mongo');
 
 var api = express();
 
+api.use((req, res, next) => {
+  if(!req.isAuthenticated()) {
+    res.status(401).send('unauthorized');
+    return;
+  }
+  
+  next();
+});
+
 function recordToResult(record) {
   var parsedDate = dateFormat(record.date, "yyyy-mm-dd");
   return {date: parsedDate, values: record.values};
