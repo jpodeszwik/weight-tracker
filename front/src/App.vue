@@ -7,7 +7,7 @@
       <b-alert variant="danger" dismissible :show="showAlert" @dismissed="showAlert=false">
         {{errorMessage}}
       </b-alert>
-      <sign-in v-if="!isAuthenicated"></sign-in>
+      <sign-in v-if="!isAuthenicated" @error="displayAlert"></sign-in>
       <weight-application v-if="isAuthenicated" @error="displayAlert"></weight-application>
     </main>
   </div>

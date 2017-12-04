@@ -42,6 +42,10 @@ export default {
           if (response.ok) {
             this.setToken(token);
           }
+        })
+        .catch((e) => {
+          console.error(e);
+          this.$emit('error', e.message);
         });
     },
     ...mapMutations({
