@@ -7,7 +7,7 @@ import actions from './actions';
 Vue.use(Vuex);
 
 const state = {
-  token: null,
+  authenticated: true,
   weightList: [],
 };
 

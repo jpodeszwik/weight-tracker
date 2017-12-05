@@ -40,7 +40,7 @@ export default {
         })
         .then((response) => {
           if (response.ok) {
-            this.setToken(token);
+            this.setAuthenticated(true);
           }
         })
         .catch((e) => {
@@ -48,9 +48,7 @@ export default {
           this.$emit('error', e.message);
         });
     },
-    ...mapMutations({
-      setToken: 'setToken',
-    }),
+    ...mapMutations(['setAuthenticated']),
   },
 };
 </script>

@@ -1,11 +1,11 @@
 /* eslint no-param-reassign: ["error", { "props": false }] */
 
-const setToken = (state, token) => {
-  state.token = token;
+const setAuthenticated = (state, authenticated) => {
+  state.authenticated = authenticated;
 };
 
 const setWeightList = (state, weightList) => {
   state.weightList = weightList;
 };
 
-export default { setToken, setWeightList };
+export default { setAuthenticated, setWeightList };

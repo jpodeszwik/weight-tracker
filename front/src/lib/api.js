@@ -9,6 +9,11 @@ class Api {
         if (response.ok) {
           return response.json();
         }
+
+        if (response.status === 401) {
+          throw new Error('unauthorized');
+        }
+
         console.error('could not fetch weights');
         throw new Error('could not fetch weights');
       })
@@ -19,6 +24,10 @@ class Api {
   deleteWeight(date) {
     return fetch(`${this.baseUrl}/api/weights/${date}`, { method: 'DELETE', credentials: 'include' })
       .then((response) => {
+        if (response.status === 401) {
+          throw new Error('unauthorized');
+        }
+
         if (!response.ok) {
           console.error('could not delete weight');
           throw new Error('could not delete weight');
@@ -37,6 +46,10 @@ class Api {
         body,
       })
       .then((response) => {
+        if (response.status === 401) {
+          throw new Error('unauthorized');
+        }
+
         if (!response.ok) {
           console.error('could not add weight record');
           throw new Error('could not add new record');
