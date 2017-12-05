@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <weight-upload @error="emitError"></weight-upload>
-    <weight-list @error="emitError"></weight-list>
+    <weight-list id="weightList" @error="emitError"></weight-list>
   </b-container> 
 </template>
 
@@ -22,3 +22,9 @@ export default {
   },
 };
 </script>
+
+<style>
+#weightList {
+  margin-top: 10px;
+}
+</style>

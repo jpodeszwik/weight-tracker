@@ -1,13 +1,13 @@
 <template>
     <b-container>
       <b-row>
-        <b-col>
-          <b-form-input v-model="date" type="date"  placeholder="Enter date" />
+        <b-col cols="6">
+          <b-form-input v-model="date" type="date"  placeholder="date" />
         </b-col>
-        <b-col>
-          <b-form-input v-model="weight" type="text" placeholder="Your weight" />
+        <b-col cols="4">
+          <b-form-input v-model="weight" type="text" placeholder="weight" />
         </b-col>
-        <b-col>
+        <b-col cols="2">
           <b-button size="xs" variant="success" @click="saveNewRecord()">Add</b-button>
         </b-col>
       </b-row>
