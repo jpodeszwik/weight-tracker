@@ -9,8 +9,6 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
-
   const fields = [
     'date',
     'weight',
@@ -22,31 +20,15 @@
 
   export default {
     name: 'weight-list',
+    props: ['weightList'],
     data() {
       return {
         fields,
       };
     },
-    mounted() {
-      this.fetchWeights();
-    },
-    computed: {
-      ...mapGetters({
-        weightList: 'getWeightList',
-      }),
-    },
     methods: {
       deleteWeight(date) {
-        this.$store.dispatch('deleteWeight', date)
-          .catch((e) => {
-            this.$emit('error', e.message);
-          });
-      },
-      fetchWeights() {
-        this.$store.dispatch('fetchWeights')
-          .catch((e) => {
-            this.$emit('error', e.message);
-          });
+        this.$emit('deleteWeight', date);
       },
     },
   };

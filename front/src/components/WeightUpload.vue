@@ -25,10 +25,7 @@
     },
     methods: {
       saveNewRecord() {
-        this.$store.dispatch('addWeight', { date: this.date, weight: this.weight })
-          .catch((e) => {
-            this.$emit('error', e.message);
-          });
+        this.$emit('addWeight', { date: this.date, weight: this.weight });
       },
     },
   };

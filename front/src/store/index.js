@@ -8,7 +8,6 @@ Vue.use(Vuex);
 
 const state = {
   authenticated: true,
-  weightList: [],
 };
 
 export default new Vuex.Store({
