@@ -1,7 +1,7 @@
 var express = require('express');
 var dateFormat = require('dateformat');
 
-var Weight = require('./mongo');
+var Weight = require('../mongo');
 
 var api = express();
 
