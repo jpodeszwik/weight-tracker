@@ -16,7 +16,7 @@ export default {
   data() {
     return {
       googleSignInParams: {
-        client_id: '970458356704-jvcfdrhkl6v0498n1mhmfeis3ho987n5.apps.googleusercontent.com',
+        client_id: process.env.GOOGLE_CLIENT_ID,
       },
     };
   },
