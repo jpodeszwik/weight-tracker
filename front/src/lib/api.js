@@ -14,7 +14,6 @@ class Api {
           throw new Error('unauthorized');
         }
 
-        console.error('could not fetch weights');
         throw new Error('could not fetch weights');
       })
       .then(items => items.map(
@@ -29,7 +28,6 @@ class Api {
         }
 
         if (!response.ok) {
-          console.error('could not delete weight');
           throw new Error('could not delete weight');
         }
       });
@@ -51,9 +49,18 @@ class Api {
         }
 
         if (!response.ok) {
-          console.error('could not add weight record');
           throw new Error('could not add new record');
         }
+      });
+  }
+
+  login(token) {
+    return fetch(`${this.baseUrl}/login`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ token }),
       });
   }
 }

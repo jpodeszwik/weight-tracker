@@ -11,6 +11,9 @@
 
 <script>
 import { mapMutations } from 'vuex';
+import Api from '../lib/api';
+
+const api = new Api(process.env.API_URL);
 
 export default {
   data() {
@@ -25,26 +28,17 @@ export default {
       const token = googleUser.getAuthResponse().id_token;
       this.loginOnBackend(token);
     },
-    onSignInError(error) {
-      console.error('authentication error', error);
+    onSignInError(e) {
+      this.$emit('authentication error', e.message);
     },
     loginOnBackend(token) {
-      const body = JSON.stringify({ token });
-
-      fetch(`${process.env.API_URL}/login`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body,
-        })
+      api.login(token)
         .then((response) => {
           if (response.ok) {
             this.setAuthenticated(true);
           }
         })
         .catch((e) => {
-          console.error(e);
           this.$emit('error', e.message);
         });
     },
