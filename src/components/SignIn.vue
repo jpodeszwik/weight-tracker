@@ -1,48 +1,20 @@
 <template>
   <center>
-    <g-signin-button
-      :params="googleSignInParams"
-      @success="onSignInSuccess"
-      @error="onSignInError">
-      Sign in with Google
-    </g-signin-button>
+    <b-button size="xs" variant="success" @click="signInWithGoogle()">Sign in with google</b-button>
   </center>
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
-import Api from '../lib/api';
-
-const api = new Api(process.env.API_URL);
+import { logInWithGoogle } from '../lib/firebase';
 
 export default {
   data() {
-    return {
-      googleSignInParams: {
-        client_id: process.env.GOOGLE_CLIENT_ID,
-      },
-    };
+    return {};
   },
   methods: {
-    onSignInSuccess(googleUser) {
-      const token = googleUser.getAuthResponse().id_token;
-      this.loginOnBackend(token);
+    signInWithGoogle() {
+      logInWithGoogle();
     },
-    onSignInError(e) {
-      this.$emit('authentication error', e.message);
-    },
-    loginOnBackend(token) {
-      api.login(token)
-        .then((response) => {
-          if (response.ok) {
-            this.setAuthenticated(true);
-          }
-        })
-        .catch((e) => {
-          this.$emit('error', e.message);
-        });
-    },
-    ...mapMutations(['setAuthenticated']),
   },
 };
 </script>

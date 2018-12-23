@@ -1,35 +1,40 @@
 <template>
   <div id="app">
     <header>
-      <center><span>Weight Tracker</span></center>
+      <center>
+        <span>Weight Tracker</span>
+      </center>
     </header>
     <main>
-      <b-alert variant="danger" dismissible :show="showAlert" @dismissed="showAlert=false">
-        {{errorMessage}}
-      </b-alert>
-      <sign-in v-if="!isAuthenicated" @error="displayAlert"></sign-in>
-      <weight-application v-if="isAuthenicated" @error="displayAlert"></weight-application>
+      <b-alert
+        variant="danger"
+        dismissible
+        :show="showAlert"
+        @dismissed="showAlert=false"
+      >{{errorMessage}}</b-alert>
+      <sign-in v-if="user === null" @error="displayAlert"></sign-in>
+      <weight-application v-if="user !== null" @error="displayAlert"></weight-application>
     </main>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
+import { onUserChange } from './lib/firebase';
 import WeightApplication from './components/WeightApplication';
 import SignIn from './components/SignIn';
 
 export default {
   data() {
     return {
+      user: null,
       showAlert: false,
       errorMessage: '',
     };
   },
-  computed: {
-    ...mapGetters({
-      isAuthenicated: 'isAuthenticated',
-    }),
+  created() {
+    onUserChange((user) => {
+      this.user = user;
+    });
   },
   name: 'app',
   components: {

@@ -1,68 +1,33 @@
-class Api {
-  constructor(baseUrl) {
-    this.baseUrl = baseUrl;
-  }
+import firebase, { getCurrentUser } from './firebase';
 
-  fetchWeights() {
-    return fetch(`${this.baseUrl}/api/weights`, { credentials: 'include' })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
+const weightsRef = () => {
+  const uid = getCurrentUser().uid;
+  return firebase.database().ref(`weights/${uid}`);
+};
 
-        if (response.status === 401) {
-          throw new Error('unauthorized');
-        }
+const weightRef = (date) => {
+  const uid = getCurrentUser().uid;
+  return firebase.database().ref(`weights/${uid}/${date}`);
+};
 
-        throw new Error('could not fetch weights');
-      })
-      .then(items => items.map(
-        item => ({ date: item.date, weight: item.values ? item.values.weight : null })));
-  }
+export const addWeight = (date, weight) =>
+  weightRef(date).set(weight);
 
-  deleteWeight(date) {
-    return fetch(`${this.baseUrl}/api/weights/${date}`, { method: 'DELETE', credentials: 'include' })
-      .then((response) => {
-        if (response.status === 401) {
-          throw new Error('unauthorized');
-        }
+export function subscribeForWeights(callback) {
+  return weightsRef().on('value', (snapshot) => {
+    const val = snapshot.val() || {};
 
-        if (!response.ok) {
-          throw new Error('could not delete weight');
-        }
-      });
-  }
+    const weights = Object.keys(val)
+      .map(key => ({ date: key, weight: val[key] }));
 
-  addWeight(date, weight) {
-    const body = JSON.stringify({ date, values: { weight } });
-
-    return fetch(`${this.baseUrl}/api/weights`,
-      {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body,
-      })
-      .then((response) => {
-        if (response.status === 401) {
-          throw new Error('unauthorized');
-        }
-
-        if (!response.ok) {
-          throw new Error('could not add new record');
-        }
-      });
-  }
-
-  login(token) {
-    return fetch(`${this.baseUrl}/login`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ token }),
-      });
-  }
+    const sortedWeights = weights.sort((a, b) => (`${b.date}`).localeCompare(a.date));
+    callback(sortedWeights);
+  });
 }
 
-export default Api;
+export function unsubscribeForWeights(listener) {
+  return weightsRef().off('value', listener);
+}
+
+export const deleteWeight = date =>
+  weightRef(date).remove();

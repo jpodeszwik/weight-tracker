@@ -2,15 +2,13 @@
   <b-container>
     <weight-upload @addWeight="addWeight"></weight-upload>
     <weight-list id="weightList" :weightList="weightList" @deleteWeight="deleteWeight"></weight-list>
-  </b-container> 
+  </b-container>
 </template>
 
 <script>
 import WeightUpload from './WeightUpload';
 import WeightList from './WeightList';
-import Api from '../lib/api';
-
-const api = new Api(process.env.API_URL);
+import { addWeight, deleteWeight, subscribeForWeights } from '../lib/api';
 
 export default {
   name: 'weight-application',
@@ -24,30 +22,16 @@ export default {
     WeightList,
   },
   mounted() {
-    this.fetchWeights();
+    subscribeForWeights((weights) => {
+      this.weightList = weights;
+    });
   },
   methods: {
-    unauthorizeOrEmitError(e) {
-      if (e.message === 'unauthorized') {
-        this.$store.dispatch('setAuthenticated', false);
-      } else {
-        this.$emit('error', e.message);
-      }
-    },
     addWeight({ date, weight }) {
-      api.addWeight(date, weight)
-        .then(() => this.fetchWeights())
-        .catch(e => this.unauthorizeOrEmitError(e));
-    },
-    fetchWeights() {
-      api.fetchWeights()
-        .then((weightList) => { this.weightList = weightList; })
-        .catch(e => this.unauthorizeOrEmitError(e));
+      addWeight(date, weight).catch(e => this.$emit('error', e.message));
     },
     deleteWeight(date) {
-      api.deleteWeight(date)
-        .then(() => this.fetchWeights())
-        .catch(e => this.unauthorizeOrEmitError(e));
+      deleteWeight(date).catch(e => this.$emit('error', e.message));
     },
   },
 };
