@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container class="weight-application">
     <weight-upload @addWeight="addWeight"></weight-upload>
     <weight-list id="weightList" :weightList="weightList" @deleteWeight="deleteWeight"></weight-list>
   </b-container>
@@ -40,5 +40,9 @@ export default {
 <style>
 #weightList {
   margin-top: 10px;
+}
+
+.weight-application {
+  margin-top: 20px;
 }
 </style>

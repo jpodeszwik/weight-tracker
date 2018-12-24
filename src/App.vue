@@ -12,8 +12,9 @@
         :show="showAlert"
         @dismissed="showAlert=false"
       >{{errorMessage}}</b-alert>
-      <sign-in v-if="user === null" @error="displayAlert"></sign-in>
-      <weight-application v-if="user !== null" @error="displayAlert"></weight-application>
+      <sign-in v-if="user === null" @error="displayAlert" />
+      <user-details v-if="user !== null" :user="user" />
+      <weight-application v-if="user !== null" @error="displayAlert" />
     </main>
   </div>
 </template>
@@ -22,6 +23,7 @@
 import { onUserChange } from './lib/firebase';
 import WeightApplication from './components/WeightApplication';
 import SignIn from './components/SignIn';
+import UserDetails from './components/UserDetails';
 
 export default {
   data() {
@@ -40,6 +42,7 @@ export default {
   components: {
     WeightApplication,
     SignIn,
+    UserDetails,
   },
   methods: {
     displayAlert(errorMessage) {
@@ -64,7 +67,7 @@ body {
 
 main {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 10px;
 }
 
 header {

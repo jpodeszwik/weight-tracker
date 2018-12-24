@@ -1,6 +1,6 @@
 <template>
   <center>
-    <b-button size="xs" variant="success" @click="signInWithGoogle()">Sign in with google</b-button>
+    <b-button size="xs" variant="success" @click="logInWithGoogle()">Sign in with google</b-button>
   </center>
 </template>
 
@@ -8,11 +8,8 @@
 import { logInWithGoogle } from '../lib/firebase';
 
 export default {
-  data() {
-    return {};
-  },
   methods: {
-    signInWithGoogle() {
+    logInWithGoogle() {
       logInWithGoogle();
     },
   },

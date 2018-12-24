@@ -18,6 +18,7 @@ export const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
 
 export const logInWithGoogle = () => auth.signInWithPopup(provider);
+export const logOut = () => auth.signOut();
 export const onUserChange = cb => auth.onAuthStateChanged(user => cb(user));
 export const getCurrentUser = () => auth.currentUser;
 
