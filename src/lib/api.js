@@ -11,14 +11,14 @@ const weightRef = (date) => {
 };
 
 export const addWeight = (date, weight) =>
-  weightRef(date).set(weight);
+  weightRef(date).set({ weight });
 
 export function subscribeForWeights(callback) {
   return weightsRef().on('value', (snapshot) => {
     const val = snapshot.val() || {};
 
     const weights = Object.keys(val)
-      .map(key => ({ date: key, weight: val[key] }));
+      .map(key => ({ date: key, weight: val[key].weight }));
 
     const sortedWeights = weights.sort((a, b) => (`${b.date}`).localeCompare(a.date));
     callback(sortedWeights);
