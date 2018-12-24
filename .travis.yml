@@ -1,6 +1,12 @@
 language: node_js
 node_js:
-  - "6"
+- '6'
 script:
-  - yarn install
-  - yarn build
+- yarn install
+- yarn build
+deploy:
+  provider: firebase
+  skip_cleanup: true
+  token:
+    secure: "$FIREBASE_SECURE_TOKEN"
+
