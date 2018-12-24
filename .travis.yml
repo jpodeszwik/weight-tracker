@@ -9,4 +9,6 @@ deploy:
   skip_cleanup: true
   token:
     secure: "$FIREBASE_SECURE_TOKEN"
-
+env:
+  global:
+  - secure: Rxim0k1zs4tn3YScQgJEBNyFU+Gfk3RAbhf9COkIBiISSgeA2MIbKnwTxpLBDO5CeZvBRepcabbpvczpTxob/WALAo43fQRQqiJOOuspfAHb4LSPbh+aC9z7U4Duoo0j+idOdI46i/GUEu7Fi8mM0s4IOOrWx9+WdN3XdWOYrggoPBfwGZLY6SakTxlJY0euwGZp6UUrgJvgbSLbRV1nE81T2iJzK3s+jKNsoPl/lDmDybSWZpTRIcwRAiutcjVw/qGzo+v04dv7+j1+RBJZ/KVbbEwk+bG68EFz96nqpGVL3RcOANlTZjs1/AuOPbTgEsZlaqSTxSJcmaDCSSZ68InnxQJDU7kBNMP+ZhfJI1sLO+BkUxUFeNld6y2R9z2TpnFtrwO4ro9QulLA0ySsx0kfc5VVDq/XWCOT5Gd0urklpQI4VHPd1oI/9qqLTvcO4YmRqT9WywZ41RMFaWnQ+gPIyDkOozqazqMasil3a/10YUGxDjmZxU8etySCLo83J5fSz1KvzU/1aeGLkZQNXYXzGeHLQjZb/lnj0i2JpiYYfXeVMxKeKDlDgREMKoslA+Kffjdd9iduOlv0pxvV9wg047eEx2mAvVIAyJ06V7/TZbpuXNOG2oKpGPiZmi3m9q9jP7/QDEEY7g1sWJLh8E5frsOa+CtMbljaUM5RoVU=
