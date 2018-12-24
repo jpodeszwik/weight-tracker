@@ -1,14 +1,6 @@
-sudo: required
-
-language: javascript
-
-services:
-  - docker
-
+language: node_js
+node_js:
+  - "6"
 script:
-  - docker build -t jpodeszwik/weight-tracker .
-
-after_success:
-  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - docker push jpodeszwik/weight-tracker
-
+  - yarn install
+  - yarn build
